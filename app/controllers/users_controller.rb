@@ -1,9 +1,10 @@
 class UsersController < ApplicationController
-
+    before_action :correct_user,only: [:edit,:update]
 
   def index
     @users = User.all
-    @user = User.new
+    @user = current_user
+    @book = Book.new
 
   end
 
@@ -19,16 +20,17 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
-    
+
   end
+
 
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-      flash[:notice] = "Book was successfully updated."
+      flash[:notice] = "User was successfully updated."
     redirect_to user_path(@user.id)
-    
-    else 
+
+    else
       render :edit
     end
   end
@@ -36,7 +38,18 @@ class UsersController < ApplicationController
   def destroy
     user = User.find(params[:id])
     user.destroy
-    redirect_to users_path
+    if user.destroy
+      flash[:notice] = "Signed out successfully."
+    redirect_to root_path
+    else
+    end
+  end
+
+  def correct_user
+    @user = User.find(params[:id])
+    unless @user.id == current_user.id
+      redirect_to user_path(current_user.id)
+    end
   end
 
   private
