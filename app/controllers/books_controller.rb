@@ -19,6 +19,8 @@ before_action :authenticate_user!
     @books = Book.all
     @book = Book.new
     @user = current_user
+    @favorite = Favorite
+    @book_comment = BookComment.new
 
   end
 
@@ -27,6 +29,8 @@ before_action :authenticate_user!
     @book = Book.find(params[:id])
     @user = @book.user
     @users = @books
+    @favorite = Favorite.new
+    @book_comment = BookComment.new
 
   end
 
