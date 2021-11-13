@@ -28,7 +28,7 @@ end
 def unfollow(user_id)
   relationships.find_by(followed_id: user_id).destroy
 end
-# フォローしているか判定
+# フォローしているか判定をする
 def following?(user)
   followings.include?(user)
 end
